@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('obchod');
 });
 
-Route::get('/obchod', function () {
+Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
