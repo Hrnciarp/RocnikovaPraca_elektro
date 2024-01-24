@@ -1,0 +1,32 @@
+.registracia {
+    background-color: #1B2223;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+}
+
+.card-inner{
+    margin-left: 4rem;
+  }
+  
+  .dropdown {
+    margin-top: 10px;
+  }
+  
+  .card-img-left {
+    width: 45%;
+    background: scroll center url("../images/grafika.jpg");
+    background-size: cover;
+  }
+  
+  .btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+  }
