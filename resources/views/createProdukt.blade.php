@@ -38,6 +38,7 @@
                 <option value="1">Procesory</option>
                 <option value="2">Grafické karty</option>
                 <option value="3">RAM</option>
+                <option value="4">Disk</option>
             </select>
         </div>
         <div class="form-group">

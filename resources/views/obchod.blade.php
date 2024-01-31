@@ -132,8 +132,16 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                             </div>
-                            @can('update', $product)
+                            @can('edit', $product)
                             <a class="float-right btn btn-outline-primary ml-2" href="{{ route('products.edit', ['id' => $product->produkt_id]) }}"> <i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                            @endcan
+
+                            @can('delete', $product)
+                            <form action="{{ route('products.destroy', $product->produkt_id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Odstrániť</button>
+                            </form>
                             @endcan
                         </div>
                     </div>

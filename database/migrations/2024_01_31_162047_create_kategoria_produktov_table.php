@@ -20,6 +20,7 @@ return new class extends Migration
             ['kategoria_id' => 1, 'nazov' => 'Procesory'],
             ['kategoria_id' => 2, 'nazov' => 'Grafické karty'],
             ['kategoria_id' => 3, 'nazov' => 'RAM'],
+            ['kategoria_id' => 4, 'nazov' => 'Disk'],
         ]);
     }
 

@@ -40,6 +40,7 @@ Route::post('/obchod', [ProduktyController::class, 'store'])->name('products.sto
 Route::get('/obchod/{id}/edit', [ProduktyController::class, 'edit'])->name('products.edit');
 
 Route::put('/obchod/{id}', [ProduktyController::class, 'update'])->name('products.update');
+Route::delete('/obchod/{id}', [ProduktyController::class, 'destroy'])->name('products.destroy');
 
 
 require __DIR__.'/auth.php';

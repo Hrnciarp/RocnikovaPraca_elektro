@@ -39,6 +39,7 @@
                 <option value="1" @if($products->kategoria_id == 1) selected @endif>Procesory</option>
                 <option value="2" @if($products->kategoria_id == 2) selected @endif>Grafické karty</option>
                 <option value="3" @if($products->kategoria_id == 3) selected @endif>RAM</option>
+                <option value="4" @if($products->kategoria_id == 4) selected @endif>Disk</option>
             </select>
         </div>
         <div class="form-group">

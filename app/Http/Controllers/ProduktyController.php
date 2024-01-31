@@ -60,12 +60,15 @@ class ProduktyController extends Controller
     public function destroy($id)
     {
 
-        $products = Produkty::findOrFail($id);
+        $produkt = Produkty::find($id);
 
-        $this->authorize('delete', $products);
-
-        $products->delete();
-        return redirect()->route('obchod.index')->with('message', 'Produkt bol úspešne odstránený.');
+        if(file_exists(public_path($produkt->cesta_obrazok))){
+            unlink(public_path($produkt->cesta_obrazok));
+        }
+    
+        $produkt->delete();
+    
+        return redirect('/obchod')->with('success', 'Produkt bol úspešne odstránený!');
     }
 
     public function update(Request $request, $id)

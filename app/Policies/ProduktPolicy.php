@@ -29,4 +29,9 @@ class ProduktPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function edit(User $user)
+    {
+        return $user->hasRole('admin');
+    }
 }
