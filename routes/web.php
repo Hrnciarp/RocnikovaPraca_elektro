@@ -4,6 +4,7 @@ use App\Http\Controllers\ObchodController;
 use App\Http\Controllers\ProduktyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Produkty;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('obchod');
+    $products = Produkty::all();
+    return view('obchod', compact('products'));
 });
 
 Route::get('/obchod', function () {

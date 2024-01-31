@@ -50,7 +50,7 @@
 
     @cannot('create', $products)
         <h1>Pridanie produktu</h1>
-        <p>Nemôžeš pridať produkt, pretože nie si admin</p>
+        <p>Nemôžeš pridať produkt, pretože nie si admin!</p>
     @endcannot
 
     <span style="margin-right: 10px;"></span>
