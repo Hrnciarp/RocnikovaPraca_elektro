@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('produkt_id');
             $table->integer('kategoria_id');
             $table->longText('nazov');
-            $table->decimal('cena', 5, 2);
+            $table->decimal('cena', 8, 2);
             $table->integer('star_rating');
             $table->string('cesta_obrazok');
 

@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="cena">Cena (€):</label>
-            <input type="number" name="cena" id="cena" step=0.2 min="0" max="9999999" value="{{ $products->cena }}" required>
+            <input type="number" name="cena" id="cena" step=0.1 min="0" max="9999999" value="{{ $products->cena }}" required>
         </div>
         <div class="form-group">
             <label for="star_rating">Hodnotenie hviezdičkami:</label>

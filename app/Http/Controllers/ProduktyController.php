@@ -25,10 +25,10 @@ class ProduktyController extends Controller
     {
         $request->validate([
             'nazov' => 'required',
-            'cena' => 'required|min:0|max:9999999',
+            'cena' => 'required|min:0',
             'star_rating' => 'required|min:1|max:5',
-            'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'kategoria_id' => 'required|numeric|min:1|max:3',
+            'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'kategoria_id' => 'required|numeric|min:1|max:4',
         ]);
     
         $obrazok = $request->file('obrazok');
@@ -75,10 +75,10 @@ class ProduktyController extends Controller
     {
         $request->validate([
             'nazov' => 'required',
-            'cena' => 'required|min:0|max:9999999',
+            'cena' => 'required|min:0',
             'star_rating' => 'required|min:1|max:5',
-            'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'kategoria_id' => 'required|numeric|min:1|max:3',
+            'obrazok' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'kategoria_id' => 'required|numeric|min:1|max:4',
         ]);
     
         $produkt = Produkty::find($id);
