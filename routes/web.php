@@ -20,6 +20,7 @@ use App\Models\Produkty;
 Route::get('/', function () {
     $products = Produkty::all();
     return view('obchod', compact('products'));
+    
 });
 
 Route::get('/obchod', function () {
