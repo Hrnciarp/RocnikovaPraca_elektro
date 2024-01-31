@@ -54,9 +54,7 @@ class ProduktyController extends Controller
     {
 
         $products = Produkty::findOrFail($id);
-
-
-        return view('editProduktu', compact('products'));
+        return view('editProdukt', compact('products'));
     }
 
     public function destroy($id)
@@ -79,28 +77,29 @@ class ProduktyController extends Controller
             'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'kategoria_id' => 'required|numeric|min:1|max:3',
         ]);
-
-        $produkt = Produkt::find($id);
-
+    
+        $produkt = Produkty::find($id);
+    
         $produkt->nazov = $request->get('nazov');
         $produkt->cena = $request->get('cena');
         $produkt->star_rating = $request->get('star_rating');
-        $produkt->kategoria = $request->get('kategoria_id');
-
+        $produkt->kategoria_id = $request->get('kategoria_id');
+    
         if($request->file('obrazok')){
             $obrazok = $request->file('obrazok');
             $nazovSuboru = time().'.'.$obrazok->getClientOriginalExtension();
             $cesta = 'assets/images/'.$nazovSuboru;
-
+    
             $obrazok->move(public_path('assets/images'), $nazovSuboru);
-
+    
             $produkt->cesta_obrazok = $cesta;
         }
-
+    
         $produkt->save();
-
+    
         return redirect('/obchod')->with('success', 'Produkt bol úspěšne aktualizovaný!');
     }
+    
 
 
 }

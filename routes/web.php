@@ -20,7 +20,7 @@ use App\Models\Produkty;
 Route::get('/', function () {
     $products = Produkty::all();
     return view('obchod', compact('products'));
-    
+
 });
 
 Route::get('/obchod', function () {
@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/obchod', [ProduktyController::class, 'index'])->name('products.index');
 Route::get('/obchod/create', [ProduktyController::class, 'create'])->name('products.create');
 Route::post('/obchod', [ProduktyController::class, 'store'])->name('products.store');
+
+Route::get('/obchod/{id}/edit', [ProduktyController::class, 'edit'])->name('products.edit');
+
+Route::put('/obchod/{id}', [ProduktyController::class, 'update'])->name('products.update');
 
 
 require __DIR__.'/auth.php';

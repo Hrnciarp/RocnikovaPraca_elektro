@@ -133,7 +133,7 @@
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                             </div>
                             @can('update', $product)
-                                <a class="float-right btn btn-outline-primary ml-2" href="#"> <i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                            <a class="float-right btn btn-outline-primary ml-2" href="{{ route('products.edit', ['id' => $product->produkt_id]) }}"> <i class="fa-solid fa-pen-to-square"></i> Edit</a>
                             @endcan
                         </div>
                     </div>
