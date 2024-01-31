@@ -15,6 +15,12 @@ class ProduktyController extends Controller
         return view('obchod', compact('products'));
     }
 
+    public function create()
+    {
+        $products = new Produkty();
+        return view('createProdukt' , compact('products'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -22,6 +28,7 @@ class ProduktyController extends Controller
             'cena' => 'required|min:0|max:9999999',
             'star_rating' => 'required|min:1|max:5',
             'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'kategoria_id' => 'required|numeric|min:1|max:3',
         ]);
     
         $obrazok = $request->file('obrazok');
@@ -35,6 +42,7 @@ class ProduktyController extends Controller
             'cena' => $request->get('cena'),
             'star_rating' => $request->get('star_rating'),
             'cesta_obrazok' => $cesta,
+            'kategoria_id' => $request->get('kategoria_id'),
         ]);
     
         $produkt->save();
@@ -69,6 +77,7 @@ class ProduktyController extends Controller
             'cena' => 'required|min:0|max:9999999',
             'star_rating' => 'required|min:1|max:5',
             'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'kategoria_id' => 'required|numeric|min:1|max:3',
         ]);
 
         $produkt = Produkt::find($id);
@@ -76,6 +85,7 @@ class ProduktyController extends Controller
         $produkt->nazov = $request->get('nazov');
         $produkt->cena = $request->get('cena');
         $produkt->star_rating = $request->get('star_rating');
+        $produkt->kategoria = $request->get('kategoria_id');
 
         if($request->file('obrazok')){
             $obrazok = $request->file('obrazok');

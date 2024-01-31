@@ -84,6 +84,24 @@
         <h1 class="text-white fs-3 fw-bolder">GearShop</h1>
     </div>
 </header>
+
+
+@if(Auth::user() && Auth::user()->hasRole('admin'))
+        <section class="py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="d-grid mb-2">
+                        <a href="{{ url('/obchod/create') }}" class="text-black">
+                            <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase bg-blue-400" type="button">
+                                Pridať produkt
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+@endif
+
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
