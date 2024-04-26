@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>GearShop</title>
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/styles.css')}}">
@@ -38,7 +40,7 @@
                     <button class="btn btn-outline-light" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Košík
-                        <span class="badge bg-white text-dark ms-1 rounded-pill">0</span>
+                        <span class="badge bg-white text-dark ms-1 rounded-pill">{{ \App\Http\Controllers\KosikController::pocetVKosiku() }}</span>
                     </button>
                 </form>
                 <div class="dropdown">
@@ -80,6 +82,7 @@
         </div>
     </div>
 </nav>
+
 <!-- Header-->
 <header class="py-5 bg-image-full" style="background-image: url('{{asset('assets/images/background_obchod.jpg')}}')">
     <div class="text-center my-5">
@@ -87,7 +90,11 @@
     </div>
 </header>
 
-
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 @if(Auth::user() && Auth::user()->hasRole('admin'))
         <section class="py-5">
             <div class="row justify-content-center">
@@ -163,15 +170,16 @@
                                     </div>
                                     <!-- Product price-->
                                     {{ $product->cena }} €
-                                    <p> 
+                                    <p>
                                     {{ $product->kategoria->nazov }}
                                     </p>
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pridať do košíka</a></div>
-                            </div>
+                                <div class="text-center">
+                                    <a class="btn btn-outline-dark mt-auto add-to-cart"  data-id="{{ $product->produkt_id }}">Pridať do košíka</a></div>
+                                </div>
                             @can('edit', $product)
                             <a class="float-right btn btn-outline-primary ml-2" href="{{ route('products.edit', ['id' => $product->produkt_id]) }}"> <i class="fa-solid fa-pen-to-square"></i> Edit</a>
                             @endcan
@@ -199,7 +207,7 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 
-<script> 
+<script>
     document.querySelector('input[name="search"]').addEventListener('change', function() {
         localStorage.setItem('obchod_search', this.value);
     });
@@ -247,6 +255,27 @@
         localStorage.removeItem('obchod_sort_by');
     });
 
+    $(document).ready(function() {
+        $('.add-to-cart').click(function(e) {
+            e.preventDefault();
+
+            var productId = $(this).data('id');
+
+            $.ajax({
+                url: '/obchod/add-to-cart/' + productId,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert("Pridanie do košíka bolo úspešné!");
+                },
+                error: function(){
+                    alert('Pridanie zlyhalo, možno nie ste prihlásený');
+                }
+            });
+        });
+    });
 </script>
 
 </body>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KosikController;
 use App\Http\Controllers\ObchodController;
 use App\Http\Controllers\ProduktyController;
 use App\Http\Controllers\ProfileController;
@@ -27,16 +28,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/obchod/add-to-cart/{product}', [KosikController::class, 'addToCart'])->name('cart.add');
+
+
 });
 
 Route::get('/obchod', [ProduktyController::class, 'index'])->name('products.index');
-Route::get('/obchod/create', [ProduktyController::class, 'create'])->name('products.create');
-Route::post('/obchod', [ProduktyController::class, 'store'])->name('products.store');
+Route::get('/obchod/create', [ProduktyController::class, 'create'])->name('products.create')->middleware('is_admin');
+Route::post('/obchod', [ProduktyController::class, 'store'])->name('products.store')->middleware('is_admin');
 
-Route::get('/obchod/{id}/edit', [ProduktyController::class, 'edit'])->name('products.edit');
+Route::get('/obchod/{id}/edit', [ProduktyController::class, 'edit'])->name('products.edit')->middleware('is_admin');
 
-Route::put('/obchod/{id}', [ProduktyController::class, 'update'])->name('products.update');
-Route::delete('/obchod/{id}', [ProduktyController::class, 'destroy'])->name('products.destroy');
+Route::put('/obchod/{id}', [ProduktyController::class, 'update'])->name('products.update')->middleware('is_admin');;
+Route::delete('/obchod/{id}', [ProduktyController::class, 'destroy'])->name('products.destroy')->middleware('is_admin');;
 
 
 require __DIR__.'/auth.php';

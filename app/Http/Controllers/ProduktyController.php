@@ -51,13 +51,13 @@ class ProduktyController extends Controller
             'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'kategoria_id' => 'required|numeric|min:1|max:4',
         ]);
-    
+
         $obrazok = $request->file('obrazok');
         $nazovSuboru = time().'.'.$obrazok->getClientOriginalExtension();
         $cesta = 'assets/images/'.$nazovSuboru;
-    
+
         $obrazok->move(public_path('assets/images'), $nazovSuboru);
-    
+
         $produkt = new Produkty([
             'nazov' => $request->get('nazov'),
             'cena' => $request->get('cena'),
@@ -65,9 +65,9 @@ class ProduktyController extends Controller
             'cesta_obrazok' => $cesta,
             'kategoria_id' => $request->get('kategoria_id'),
         ]);
-    
+
         $produkt->save();
-    
+
         return redirect('/obchod')->with('success', 'Produkt bol uložený!');
     }
 
@@ -86,9 +86,9 @@ class ProduktyController extends Controller
         if(file_exists(public_path($produkt->cesta_obrazok))){
             unlink(public_path($produkt->cesta_obrazok));
         }
-    
+
         $produkt->delete();
-    
+
         return redirect('/obchod')->with('success', 'Produkt bol úspešne odstránený!');
     }
 
@@ -100,28 +100,28 @@ class ProduktyController extends Controller
             'obrazok' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'kategoria_id' => 'required|numeric|min:1|max:4',
         ]);
-    
+
         $produkt = Produkty::find($id);
-    
+
         $produkt->nazov = $request->get('nazov');
         $produkt->cena = $request->get('cena');
         $produkt->kategoria_id = $request->get('kategoria_id');
-    
+
         if($request->file('obrazok')){
             $obrazok = $request->file('obrazok');
             $nazovSuboru = time().'.'.$obrazok->getClientOriginalExtension();
             $cesta = 'assets/images/'.$nazovSuboru;
-    
+
             $obrazok->move(public_path('assets/images'), $nazovSuboru);
-    
+
             $produkt->cesta_obrazok = $cesta;
         }
-    
+
         $produkt->save();
-    
+
         return redirect('/obchod')->with('success', 'Produkt bol úspěšne aktualizovaný!');
     }
-    
+
     private function generateStar()  {
         $pocet_hviezd = mt_rand(3,5);
         return $pocet_hviezd;
