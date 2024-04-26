@@ -8,9 +8,31 @@ use App\Models\Produkty;
 class ProduktyController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $products = Produkty::all();
+        $search = $request->get('search');
+        $kategoria_id = $request->get('kategoria_id');
+
+        $sort_by = $request->get('sort_by');
+        $order = $request->get('order');
+
+        $request->session()->put('kategoria_id', $kategoria_id);
+
+        $products = Produkty::query();
+
+        if ($search) {
+            $products = $products->where('nazov', 'like', "%{$search}%");
+        }
+
+        if ($kategoria_id) {
+            $products = $products->where('kategoria_id', $kategoria_id);
+        }
+
+        if ($sort_by && $order) {
+            $products = $products->orderBy($sort_by, $order);
+        }
+
+        $products = $products->paginate(8)->appends(request()->query());
 
         return view('obchod', compact('products'));
     }
@@ -26,7 +48,6 @@ class ProduktyController extends Controller
         $request->validate([
             'nazov' => 'required',
             'cena' => 'required|min:0',
-            'star_rating' => 'required|min:1|max:5',
             'obrazok' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'kategoria_id' => 'required|numeric|min:1|max:4',
         ]);
@@ -40,7 +61,7 @@ class ProduktyController extends Controller
         $produkt = new Produkty([
             'nazov' => $request->get('nazov'),
             'cena' => $request->get('cena'),
-            'star_rating' => $request->get('star_rating'),
+            'star_rating' => $this->generateStar(),
             'cesta_obrazok' => $cesta,
             'kategoria_id' => $request->get('kategoria_id'),
         ]);
@@ -76,7 +97,6 @@ class ProduktyController extends Controller
         $request->validate([
             'nazov' => 'required',
             'cena' => 'required|min:0',
-            'star_rating' => 'required|min:1|max:5',
             'obrazok' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'kategoria_id' => 'required|numeric|min:1|max:4',
         ]);
@@ -85,7 +105,6 @@ class ProduktyController extends Controller
     
         $produkt->nazov = $request->get('nazov');
         $produkt->cena = $request->get('cena');
-        $produkt->star_rating = $request->get('star_rating');
         $produkt->kategoria_id = $request->get('kategoria_id');
     
         if($request->file('obrazok')){
@@ -103,6 +122,10 @@ class ProduktyController extends Controller
         return redirect('/obchod')->with('success', 'Produkt bol úspěšne aktualizovaný!');
     }
     
+    private function generateStar()  {
+        $pocet_hviezd = mt_rand(3,5);
+        return $pocet_hviezd;
+    }
 
 
 }

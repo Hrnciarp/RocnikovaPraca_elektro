@@ -104,6 +104,43 @@
         </section>
 @endif
 
+<section class="py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="d-grid mb-2">
+                <div class="search-box">
+                    <form action="{{ route('products.index') }}" method="get" class="d-flex align-items-center">
+                        <input type="text" class="form-control me-2" name="search" placeholder="Zadaj názov produktu" style="width: 200px;">
+                        <select class="form-select me-2" name="kategoria_id" style="width: 200px;">
+                            <option value="">Vyber kategóriu</option>
+                            <option value="1">Procesory</option>
+                            <option value="2">Grafické karty</option>
+                            <option value="3">RAM</option>
+                            <option value="4">Disk</option>
+                        </select>
+
+                        <select class="form-select me-2" name="sort_by" style="width: 200px;">
+                            <option value="">Zoraď podľa</option>
+                            <option value="cena">Cena</option>
+                            <option value="created_at">Dátum</option>
+                            <option value="star_rating">Hodnotenie</option>
+                        </select>
+
+                        <select class="form-select me-2" name="order" style="width: 200px;">
+                            <option value="">Vzostupne/Zostupne</option>
+                            <option value="asc">Vzostupne</option>
+                            <option value="desc">Zostupne</option>
+                        </select>
+
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        <a href="{{ url('/obchod') }}" id="reset-filters" class="btn btn-secondary ms-2">Resetovať filtre</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Section-->
 <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
@@ -126,11 +163,14 @@
                                     </div>
                                     <!-- Product price-->
                                     {{ $product->cena }} €
+                                    <p> 
+                                    {{ $product->kategoria->nazov }}
+                                    </p>
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pridať do košíka</a></div>
                             </div>
                             @can('edit', $product)
                             <a class="float-right btn btn-outline-primary ml-2" href="{{ route('products.edit', ['id' => $product->produkt_id]) }}"> <i class="fa-solid fa-pen-to-square"></i> Edit</a>
@@ -147,6 +187,7 @@
                     </div>
                 @endforeach
             </div>
+            {{ $products->appends(['sort_by' => request('sort_by'), 'order' => request('order') , 'search' => request('search')])->links() }}
         </div>
     </section>
 <!-- Footer-->
@@ -157,5 +198,56 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+
+<script> 
+    document.querySelector('input[name="search"]').addEventListener('change', function() {
+        localStorage.setItem('obchod_search', this.value);
+    });
+
+    document.querySelector('select[name="kategoria_id"]').addEventListener('change', function() {
+        localStorage.setItem('obchod_category', this.value);
+    });
+
+    document.querySelector('select[name="order"]').addEventListener('change', function() {
+        localStorage.setItem('obchod_order', this.value);
+    });
+
+    document.querySelector('select[name="sort_by"]').addEventListener('change', function() {
+        localStorage.setItem('obchod_sort_by', this.value);
+    });
+
+    // Načítanie uložených hodnôt pri načítaní stránky
+    window.addEventListener('DOMContentLoaded', function() {
+        var search = localStorage.getItem('obchod_search');
+        var category = localStorage.getItem('obchod_category');
+        var order = localStorage.getItem('obchod_order');
+        var sort_by = localStorage.getItem('obchod_sort_by');
+
+        if (category) {
+            document.querySelector('select[name="kategoria_id"]').value = category;
+        }
+
+        if (order) {
+            document.querySelector('select[name="order"]').value = order;
+        }
+
+        if (sort_by) {
+            document.querySelector('select[name="sort_by"]').value = sort_by;
+        }
+
+        if (search) {
+            document.querySelector('input[name="search"]').value = search;
+        }
+    });
+    // Vymazanie hodnôt pri kliknutí na tlačidlo na resetovanie filtrov
+    document.querySelector('#reset-filters').addEventListener('click', function() {
+        localStorage.removeItem('obchod_search');
+        localStorage.removeItem('obchod_category');
+        localStorage.removeItem('obchod_order');
+        localStorage.removeItem('obchod_sort_by');
+    });
+
+</script>
+
 </body>
 </html>

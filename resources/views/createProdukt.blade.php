@@ -23,16 +23,6 @@
             <input type="number" name="cena" id="cena" step=0.1 min="0" max="9999999" required>
         </div>
         <div class="form-group">
-            <label for="star_rating">Hodnotenie hviezdičkami:</label>
-            <select name="star_rating" id="star_rating" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label for="kategoria_id">Kategória:</label>
             <select name="kategoria_id" id="kategoria_id" required>
                 <option value="1">Procesory</option>

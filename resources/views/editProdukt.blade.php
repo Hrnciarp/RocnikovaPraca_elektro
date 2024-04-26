@@ -13,8 +13,8 @@
     @can('update', $products)
     <h1>Úprava produktu</h1>
     <form action="{{ route('products.update', $products->produkt_id) }}" method="POST" enctype="multipart/form-data">
-        @csrf <!-- Laravel CSRF token pre ochranu pred CSRF útokmi -->
-        @method('PUT') <!-- Metóda PUT pre aktualizáciu údajov -->
+        @csrf 
+        @method('PUT')
         <div class="form-group">
             <label for="nazov">Názov:</label>
             <input type="text" name="nazov" id="nazov" value="{{ $products->nazov }}" required>
@@ -22,16 +22,6 @@
         <div class="form-group">
             <label for="cena">Cena (€):</label>
             <input type="number" name="cena" id="cena" step=0.1 min="0" max="9999999" value="{{ $products->cena }}" required>
-        </div>
-        <div class="form-group">
-            <label for="star_rating">Hodnotenie hviezdičkami:</label>
-            <select name="star_rating" id="star_rating" required>
-                <option value="1" @if($products->star_rating == 1) selected @endif>1</option>
-                <option value="2" @if($products->star_rating == 2) selected @endif>2</option>
-                <option value="3" @if($products->star_rating == 3) selected @endif>3</option>
-                <option value="4" @if($products->star_rating == 4) selected @endif>4</option>
-                <option value="5" @if($products->star_rating == 5) selected @endif>5</option>
-            </select>
         </div>
         <div class="form-group">
             <label for="kategoria_id">Kategória:</label>

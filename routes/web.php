@@ -17,11 +17,7 @@ use App\Models\Produkty;
 |
 */
 
-Route::get('/', function () {
-    $products = Produkty::all();
-    return view('obchod', compact('products'));
-
-});
+Route::redirect('/', '/obchod');
 
 Route::get('/obchod', function () {
     return view('obchod');
