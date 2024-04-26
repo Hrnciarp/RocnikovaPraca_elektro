@@ -17,8 +17,10 @@ return new class extends Migration
             $table->unsignedBigInteger('produkt_id');
             $table->integer('quantity');
 
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('produkt_id')->references('produkt_id')->on('produkty')->onDelete('cascade');
+
         });
     }
 

@@ -9,7 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class KosikController extends Controller
 {
-    //
+    public function index()
+    {
+        $user = Auth::user();
+
+        $kosik = Kosik::where('user_id', $user->id)->get();
+
+        return view('cart', compact('kosik'));
+    }
+
+
     public function addToCart(Request $request, Produkty $product)
     {
         $user = Auth::user();
@@ -41,4 +50,38 @@ class KosikController extends Controller
 
         return $pocet;
     }
+
+    public static function calculateProductPrice(Produkty $product)
+    {
+        $user = Auth::user();
+
+        $kosikItem = Kosik::where('user_id', $user->id)->where('produkt_id', $product->produkt_id)->first();
+
+        if ($kosikItem) {
+            $productPrice = $kosikItem->itemy->cena * $kosikItem->quantity;
+
+            return $productPrice;
+        } else {
+            return 0;
+        }
+    }
+
+    public static function calculateTotalPrice()
+    {
+        $user = Auth::user();
+
+        $kosik = Kosik::where('user_id', $user->id)->get();
+
+        $totalPrice = 0;
+
+        foreach ($kosik as $item) {
+            $totalPrice += $item->itemy->cena * $item->quantity;
+        }
+
+        return $totalPrice;
+    }
+
+
+
+
 }

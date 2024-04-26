@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/obchod/add-to-cart/{product}', [KosikController::class, 'addToCart'])->name('cart.add');
+    Route::get('/obchod/cart', [KosikController::class, 'index'])->name('cart.index');
 
 
 });

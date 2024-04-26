@@ -20,9 +20,14 @@ class Produkty extends Model
         'star_rating',
         'cesta_obrazok',
     ];
-    
+
     public function kategoria()
     {
         return $this->belongsTo(KategorieProduktov::class, 'kategoria_id');
+    }
+
+    public function kosiky()
+    {
+        return $this->belongsTo(Kosik::class, 'kategoria_id');
     }
 }

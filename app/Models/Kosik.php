@@ -15,5 +15,11 @@ class Kosik extends Model
     protected $fillable = [
         'user_id',
         'produkt_id',
-        'quantity'];
+        'quantity'
+    ];
+
+    public function itemy()
+    {
+        return $this->belongsTo(Produkty::class, 'produkt_id');
+    }
 }
