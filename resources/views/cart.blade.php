@@ -9,12 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>GearShop</title>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/styles.css')}}">
+
 
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/cart.css')}}">
 
@@ -83,11 +83,18 @@
     </div>
 </header>
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 @if (session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
     </div>
 @endif
+
 
 <div class="container mt-5 p-3 rounded cart">
     <div class="row no-gutters">
@@ -120,31 +127,25 @@
         </div>
         <div class="col-md-4">
             <div class="payment-info">
-                <div class="d-flex justify-content-between align-items-center"><span>Card details</span></div><span class="type d-block mt-3 mb-1">Card type</span><label class="radio"> <input type="radio" name="card" value="payment" checked> <span><img width="30" src="https://img.icons8.com/color/48/000000/mastercard.png"/></span> </label>
+                <div class="d-flex justify-content-between align-items-center"><span>Detaily o karte</span></div><span class="type d-block mt-3 mb-1">Typ platobnej karty</span><label class="radio"> <input type="radio" name="card" value="payment" checked> <span><img width="30" src="https://img.icons8.com/color/48/000000/mastercard.png"/></span> </label>
 
                 <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/visa.png"/></span> </label>
-
                 <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/ultraviolet/48/000000/amex.png"/></span> </label>
-
-
                 <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/paypal.png"/></span> </label>
-                <div><label class="credit-card-label">Name on card</label><input type="text" class="form-control credit-inputs" placeholder="Name"></div>
-                <div><label class="credit-card-label">Card number</label><input type="text" class="form-control credit-inputs" placeholder="0000 0000 0000 0000"></div>
-                <div class="row">
-                    <div class="col-md-6"><label class="credit-card-label">Date</label><input type="text" class="form-control credit-inputs" placeholder="12/24"></div>
-                    <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text" class="form-control credit-inputs" placeholder="342"></div>
-                </div>
-                <hr class="line">
-                <div class="d-flex justify-content-between information"><span>Suma</span><span>{{ \App\Http\Controllers\KosikController::calculateTotalPrice() }} €</span>
-                </div><button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button"><span>Zaplatiť</span></button>
+
+                <form action="{{ route('pay') }}" method="post">
+                    @csrf
+                    <div><label>Meno na platobnej karte</label><input type="text" class="form-control credit-inputs" name="card_name" placeholder="MENO" required></div>
+                    <div><label>Číslo karty</label><input type="text" class="form-control credit-inputs" name="card_number" placeholder="0000 0000 0000 0000" required></div>
+                    <div class="row">
+                        <div class="col-md-6"><label>Dátum ukončenia platnosti karty</label><input type="text" class="form-control credit-inputs" name="expiry_date" placeholder="12/24" required></div>
+                        <div class="col-md-6"><label>CVV</label><input type="text" class="form-control credit-inputs" name="cvv" placeholder="342" required></div>
+                    </div>
+                    <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="submit"><span>Zaplatiť</span></button>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Footer-->
-<footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Peter Hrnčiar 2024</p></div>
-</footer>
 </body>
 </html>

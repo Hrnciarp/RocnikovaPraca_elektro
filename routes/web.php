@@ -4,6 +4,7 @@ use App\Http\Controllers\KosikController;
 use App\Http\Controllers\ObchodController;
 use App\Http\Controllers\ProduktyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SendMailController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Produkty;
 
@@ -32,8 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/obchod/add-to-cart/{product}', [KosikController::class, 'addToCart'])->name('cart.add');
     Route::get('/obchod/cart', [KosikController::class, 'index'])->name('cart.index');
 
+    Route::post('/pay', [KosikController::class, 'pay'])->name('pay');
+
 
 });
+Route::get('/send-mail', [SendMailController::class, 'index']);
 
 Route::get('/obchod', [ProduktyController::class, 'index'])->name('products.index');
 Route::get('/obchod/create', [ProduktyController::class, 'create'])->name('products.create')->middleware('is_admin');
