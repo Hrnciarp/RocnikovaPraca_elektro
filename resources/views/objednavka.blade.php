@@ -20,7 +20,7 @@
 
 <header class="py-5 bg-image-full" style="background-image: url('{{asset('assets/images/background_obchod.jpg')}}')">
     <div class="text-center my-5">
-        <h1 class="text-white fs-3 fw-bolder">GearShop</h1>
+        <h1 class="fs-3 fw-bolder">GearShop</h1>
     </div>
 </header>
 
@@ -41,7 +41,6 @@
 
 <p>S pozdravom,<br>
     Tím GearShop</p>
-    <img src="{{ asset('assets/images/GetGear.png') }}">
 </body>
 </html>
 
