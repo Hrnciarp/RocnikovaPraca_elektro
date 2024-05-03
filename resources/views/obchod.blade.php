@@ -167,11 +167,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            @if(Auth::user())
+                        
                                     <div class="text-center">
                                         <a class="btn btn-outline-dark mt-auto add-to-cart"  data-id="{{ $product->produkt_id }}">Pridať do košíka</a></div>
                                     </div>
-                            @endif
+                        
                             @can('edit', $product)
                             <a class="float-right btn btn-outline-primary ml-2" href="{{ route('products.edit', ['id' => $product->produkt_id]) }}"> <i class="fa-solid fa-pen-to-square"></i> Edit</a>
                             @endcan

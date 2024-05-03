@@ -141,6 +141,8 @@
                         <div class="col-md-6"><label>Dátum ukončenia platnosti karty</label><input type="text" class="form-control credit-inputs" name="expiry_date" placeholder="12/24" required></div>
                         <div class="col-md-6"><label>CVV</label><input type="text" class="form-control credit-inputs" name="cvv" placeholder="342" required></div>
                     </div>
+                    <hr class="line">
+                <div class="d-flex justify-content-between information"><span>Suma</span><span>{{ \App\Http\Controllers\KosikController::calculateTotalPrice() }} €</span>
                     <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="submit"><span>Zaplatiť</span></button>
                 </form>
             </div>
