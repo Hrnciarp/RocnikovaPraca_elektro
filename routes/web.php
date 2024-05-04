@@ -35,9 +35,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/pay', [KosikController::class, 'pay'])->name('pay');
 
+    Route::delete('/obchod/cart/{id}', [KosikController::class, 'destroy'])->name('item.destroy');
+
+    Route::put('/obchod/cart/{id}', [KosikController::class, 'update'])->name('item.update');
+
 
 });
-Route::get('/send-mail', [SendMailController::class, 'index']);
+
 
 Route::get('/obchod', [ProduktyController::class, 'index'])->name('products.index');
 Route::get('/obchod/create', [ProduktyController::class, 'create'])->name('products.create')->middleware('is_admin');

@@ -9,7 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <title>GearShop</title>
@@ -102,41 +101,49 @@
 @endif
 
 <section class="py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="d-grid mb-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
                 <div class="search-box">
-                    <form action="{{ route('products.index') }}" method="get" class="d-flex align-items-center">
-                        <input type="text" class="form-control me-2" name="search" placeholder="Zadaj názov produktu" style="width: 200px;">
-                        <select class="form-select me-2" name="kategoria_id" style="width: 200px;">
-                            <option value="">Vyber kategóriu</option>
-                            <option value="1">Procesory</option>
-                            <option value="2">Grafické karty</option>
-                            <option value="3">RAM</option>
-                            <option value="4">Disk</option>
-                        </select>
-
-                        <select class="form-select me-2" name="sort_by" style="width: 200px;">
-                            <option value="">Zoraď podľa</option>
-                            <option value="cena">Cena</option>
-                            <option value="created_at">Dátum</option>
-                            <option value="star_rating">Hodnotenie</option>
-                        </select>
-
-                        <select class="form-select me-2" name="order" style="width: 200px;">
-                            <option value="">Vzostupne/Zostupne</option>
-                            <option value="asc">Vzostupne</option>
-                            <option value="desc">Zostupne</option>
-                        </select>
-
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                        <a href="{{ url('/obchod') }}" id="reset-filters" class="btn btn-secondary ms-2">Resetovať filtre</a>
+                    <form action="{{ route('products.index') }}" method="get" class="row g-3">
+                        <div class="col-sm-6 col-md-3">
+                            <input type="text" class="form-control" name="search" placeholder="Zadaj názov produktu">
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <select class="form-select" name="kategoria_id">
+                                <option value="">Vyber kategóriu</option>
+                                <option value="1">Procesory</option>
+                                <option value="2">Grafické karty</option>
+                                <option value="3">RAM</option>
+                                <option value="4">Disk</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <select class="form-select" name="sort_by">
+                                <option value="">Zoraď podľa</option>
+                                <option value="cena">Cena</option>
+                                <option value="created_at">Dátum</option>
+                                <option value="star_rating">Hodnotenie</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <select class="form-select" name="order">
+                                <option value="">Vzostupne/Zostupne</option>
+                                <option value="asc">Vzostupne</option>
+                                <option value="desc">Zostupne</option>
+                            </select>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary me-2"><i class="fas fa-search"></i></button>
+                            <a href="{{ url('/obchod') }}" id="reset-filters" class="btn btn-secondary">Resetovať filtre</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 
 <!-- Section-->
 <section class="py-5">

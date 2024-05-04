@@ -130,11 +130,48 @@ class KosikController extends Controller
         if ($paymentSuccessful) {
             // Odoslanie e-mailu
             Mail::to($request->user())->send(new PotvrdenieObjednavky());
-
+            
+            $this->clearCart();
             return redirect()->back()->with('success', 'Platba bola úspešná a potvrdzujúci e-mail bol odoslaný.');
         } else {
             return redirect()->back()->with('error', 'Platba nebola úspešná. Skontrolujte údaje o platobnej karte a skúste to znova.');
         }
+    }
+
+    private function clearCart()
+    {
+        $user = Auth::user();
+
+        Kosik::where('user_id', $user->id)->delete();
+
+        return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        $item = Kosik::findOrFail($id);
+
+        $item->delete();
+        return redirect()->route('cart.index')->with('message', 'Produkt bol úspešne odstránený.');
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+
+        $cartItem = Kosik::find($id);
+
+    
+        if (!$cartItem) {
+            return redirect()->back()->with('error', 'Produkt nebol nájdený.');
+        }
+
+        $cartItem->quantity = $request->quantity;
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Počet produktov bol úspešne aktualizovaný.');
     }
 
 

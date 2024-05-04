@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
     <title>GearShop</title>
 
 
@@ -114,14 +115,27 @@
                         <div class="d-flex flex-row"><img class="rounded" src="{{ asset($k->itemy->cesta_obrazok) }}" width="40">
                             <div class="ml-2"><span class="font-weight-bold d-block">{{ $k->itemy->nazov }}</span><span class="spec">{{ $k->itemy->kategoria->nazov }}</span></div>
                         </div>
-                        <span class="d-block" style="text-align: center;">{{ $k->quantity }}</span>
+                        <form action="{{ route('item.update', $k->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="number" name="quantity" value="{{ $k->quantity }}" style="width: 50px; text-align: center;">
+                            <button type="submit" class="btn btn-primary ml-2" style="display: none;"><i class="fa-solid fa-save"></i></button>
+                        </form>
 
                         @php
                             $productPrice = \App\Http\Controllers\KosikController::calculateProductPrice($k->itemy);
                         @endphp
-                        <div class="d-flex flex-row align-items-center"><span class="d-block ml-5 font-weight-bold">{{ $productPrice }} € </span> <i class="fa fa-trash-o ml-3 text-black-50"></i></div>
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="d-block ml-5 font-weight-bold">{{ $productPrice }} € </span>
+                            <form action="{{ route('item.destroy', $k->id) }}" method="POST" onsubmit="return confirm('Ste si istý, že chcete vymazať tento produkt z vášho košíka {{ $k->itemy->nazov }} ?');" style="margin-left: 10px;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
                     </div>
                 @endforeach
+
 
             </div>
         </div>
